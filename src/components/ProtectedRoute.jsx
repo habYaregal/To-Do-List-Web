@@ -1,17 +1,31 @@
-// src/components/ProtectedRoute.jsx
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Navigate } from "react-router-dom";
-import { auth } from "../firebase"; // Assuming you've initialized Firebase auth here
+import { auth } from "../firebase";
 
 const ProtectedRoute = ({ children }) => {
-  const user = auth.currentUser; // Check if the user is authenticated
+  const [user, setUser] = useState(null); 
+  const [loading, setLoading] = useState(true); 
+
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged((currentUser) => {
+      setUser(currentUser);
+      setLoading(false); 
+    });
+
+    return () => unsubscribe();
+  }, []);
+
+  if (loading) {
+    // Display a loading message while authentication state is being determined
+    return <div></div>;
+  }
 
   if (!user) {
-    // If not authenticated, redirect to the login page
+    // If user is not authenticated, redirect to login
     return <Navigate to="/" replace />;
   }
 
-  // If authenticated, render the children (the protected component)
+  // If authenticated, render the protected component
   return children;
 };
 

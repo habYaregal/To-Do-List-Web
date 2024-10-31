@@ -6,22 +6,21 @@ const Register = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const [success, setSuccess] = useState(""); // Added success state
-  const navigate = useNavigate(); // Hook for redirection
+  const [success, setSuccess] = useState(""); 
+  const navigate = useNavigate(); 
 
   const handleRegister = async (e) => {
     e.preventDefault();
     try {
       await register(email, password);
       setSuccess("Registration successful! Redirecting to home...");
-      setError(""); // Reset error if registration succeeds
-      // Redirect to home after successful registration
+      setError(""); 
       setTimeout(() => {
-        navigate("/home"); // Redirect to home page
+        navigate("/home"); 
       }, 2000);
     } catch (err) {
       setError("Registration failed. Please try again.");
-      setSuccess(""); // Clear success if error occurs
+      setSuccess(""); 
     }
   };
 

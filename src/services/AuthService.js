@@ -1,6 +1,6 @@
 // src/authService.js
 import { auth } from "../firebase";
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "firebase/auth";
+import { browserLocalPersistence, createUserWithEmailAndPassword, setPersistence, signInWithEmailAndPassword, signOut } from "firebase/auth";
 
 export const register = async (email, password) => {
     const userCredential = await createUserWithEmailAndPassword(auth, email, password);
